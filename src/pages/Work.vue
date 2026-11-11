@@ -36,12 +36,35 @@
           <h4>{{ $t(`work-item.${$route.params.slug}.content.${index}.title`) }}</h4>
           <p>{{ $t(`work-item.${$route.params.slug}.content.${index}.text`) }}</p>
         </div>
-        <img v-if="item.type == 'image'" :src="`/works/${$route.params.slug}${item.src}`" alt="">
+        <img v-if="item.type == 'image'" class="gallery-thumb cursor-hover" :src="imageSrc(item)" alt="" @click="openGallery(imageSrc(item))">
         <video v-else-if="item.type == 'local-video'" :src="`/works/${$route.params.slug}${item.src}`" alt="" preload="meta" autoplay loop onclick="this.paused ? this.play() : this.pause();"></video>
         <iframe v-else-if="item.type == 'video'" :src="`/works/${$route.params.slug}${item.src}`" frameborder="0"></iframe>
       </div>
     </div>
   </section>
+  <Teleport to="body">
+    <div
+      v-if="galleryOpen"
+      class="gallery"
+      role="dialog"
+      aria-modal="true"
+      @click.self="closeGallery"
+      @touchstart.passive="onGalleryTouchStart"
+      @touchend="onGalleryTouchEnd"
+    >
+      <button class="gallery-close cursor-hover" type="button" :aria-label="$t('work-item.gallery-close')" @click="closeGallery">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <button v-if="galleryImages.length > 1" class="gallery-nav prev cursor-hover" type="button" :aria-label="$t('work-item.gallery-previous')" @click="stepGallery(-1)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5L8 12l6.5 7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <img class="gallery-image" :src="galleryImages[galleryIndex]" alt="">
+      <button v-if="galleryImages.length > 1" class="gallery-nav next cursor-hover" type="button" :aria-label="$t('work-item.gallery-next')" @click="stepGallery(1)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5L16 12l-6.5 7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <p class="gallery-count">{{ galleryIndex + 1 }} / {{ galleryImages.length }}</p>
+    </div>
+  </Teleport>
   <OtherWorks :key="componentKey" :slug=$route.params.slug></OtherWorks>
 </template>
 <script setup>
@@ -66,11 +89,33 @@ export default {
   data() {
     return {
       work: [],
-      rolesLength: null
+      rolesLength: null,
+      galleryOpen: false,
+      galleryIndex: 0,
+      galleryTouchX: 0
+    }
+  },
+  computed: {
+    galleryImages() {
+      if (!this.work || !this.work.sections) return []
+      const slug = this.$route.params.slug
+      const images = []
+      for (const section of Object.values(this.work.sections)) {
+        for (const item of section.items || []) {
+          if (item.type === 'image' && item.src) images.push(this.imageSrc(item, slug))
+        }
+      }
+      return images
+    }
+  },
+  watch: {
+    '$route.params.slug'() {
+      this.closeGallery()
     }
   },
   mounted() {
     this.prepare()
+    window.addEventListener('keydown', this.onGalleryKey)
     gsap.from('#introTitle', {left: -100, duration: 1, ease: "power3.in", autoAlpha: 0})
     gsap.from('#introTitleStroke', {right: -100, duration: 1, ease: "power3.in", autoAlpha: 0})
     gsap.from('.info', {top: 100, duration: 1.5, autoAlpha: 0})
@@ -90,11 +135,48 @@ export default {
       loadMouseHover()
     }
   },
+  beforeUnmount() {
+    window.removeEventListener('keydown', this.onGalleryKey)
+    document.documentElement.style.overflow = ''
+  },
   methods: {
     prepare() {
       const route = useRoute()
       this.work = works[route.params.slug]
       this.rolesLength = this.work.roles.length
+    },
+    imageSrc(item, slug) {
+      return `/works/${slug || this.$route.params.slug}${item.src}`
+    },
+    openGallery(src) {
+      const index = this.galleryImages.indexOf(src)
+      if (index < 0) return
+      this.galleryIndex = index
+      this.galleryOpen = true
+      document.documentElement.style.overflow = 'hidden'
+    },
+    closeGallery() {
+      this.galleryOpen = false
+      document.documentElement.style.overflow = ''
+    },
+    stepGallery(delta) {
+      const total = this.galleryImages.length
+      if (total < 2) return
+      this.galleryIndex = (this.galleryIndex + delta + total) % total
+    },
+    onGalleryKey(event) {
+      if (!this.galleryOpen) return
+      if (event.key === 'Escape') this.closeGallery()
+      if (event.key === 'ArrowRight') this.stepGallery(1)
+      if (event.key === 'ArrowLeft') this.stepGallery(-1)
+    },
+    onGalleryTouchStart(event) {
+      this.galleryTouchX = event.changedTouches[0].clientX
+    },
+    onGalleryTouchEnd(event) {
+      const delta = event.changedTouches[0].clientX - this.galleryTouchX
+      if (Math.abs(delta) < 40) return
+      this.stepGallery(delta < 0 ? 1 : -1)
     }
   }
 }
@@ -275,7 +357,93 @@ h1.text-stroke:after {
   height: 100%;
   width: 100%;
   z-index: 99999;
+  pointer-events: none;
   background: linear-gradient(0deg, rgba(30, 30, 30, 0.3), rgba(30, 30, 30, 0.3)), linear-gradient(0deg, rgba(150, 120, 182, 0.3), rgba(150, 120, 182, 0.3));
+}
+
+.gallery-thumb {
+  transition: transform .35s ease;
+}
+
+@media (hover) {
+  .content:hover .gallery-thumb {
+    transform: scale(1.015);
+  }
+}
+
+.gallery {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8vh 9vw;
+  background: #111111;
+}
+
+.gallery-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.gallery-close,
+.gallery-nav {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #d9d9d9;
+}
+
+.gallery-close {
+  top: 28px;
+  right: 32px;
+  width: 42px;
+  height: 42px;
+}
+
+.gallery-close svg,
+.gallery-nav svg {
+  width: 28px;
+  height: 28px;
+}
+
+.gallery-nav {
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  transform: translateY(-50%);
+  border: 1px solid rgba(217, 217, 217, 0.35);
+  border-radius: 50%;
+}
+
+.gallery-nav.prev { left: 28px; }
+.gallery-nav.next { right: 28px; }
+
+.gallery-count {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  letter-spacing: 0.14em;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .gallery {
+    padding: 10vh 4vw;
+  }
+  .gallery-nav.prev { left: 10px; }
+  .gallery-nav.next { right: 10px; }
+  .gallery-close {
+    top: 16px;
+    right: 12px;
+  }
 }
 
 .content iframe {

@@ -42,6 +42,9 @@ export const fr = {
     "solutions": "Solutions",
     "visit-website-stroke": "Visiter",
     "visit-website-highlighted": "le Site",
+    "gallery-close": "Fermer",
+    "gallery-previous": "Image précédente",
+    "gallery-next": "Image suivante",
     "rock-en-delire": {
       "description": "Rock en délire est un projet fictif réalisé durant ma première année de DUT MMI. Le client était un festival de rock situé à Nantes. Notre équipe était composé d' un Rédacteur, un Community Manager et un Développeur.{br}{br}L'évènement souhaitait avoir plus de visibilité ainsi que de renforcer la fidélité de ceux qui était venu aux édition précédentes.",
       "challenges": "Réaliser un site vitrine sans rafraichissement et avec une base de données local en JSON tout en apprenant ReactJS, une bibliothèque Javascript permettant de faciliter la création d'application web.",
