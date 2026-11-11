@@ -12,9 +12,9 @@ const loadedLanguages = ['en']
 
 export const languagesAvailable = ['en', 'fr']
 
-function setI18nLanguage (lang) {
-    i18n.global.locale = lang
-    document.querySelector('html').setAttribute('lang', lang)
+function setI18nLanguage (lang: string) {
+    i18n.global.locale = lang as 'en' | 'fr'
+    document.querySelector('html')?.setAttribute('lang', lang)
     return lang
 }
 
@@ -28,16 +28,16 @@ export function navigatorCloseLanguage () {
             return loadLanguageAsync(userLanguageSplit[0])
         }
     }
-    return 'en'
+    return loadLanguageAsync('en')
 }
 
-export function loadLanguageAsync (lang) {
+export function loadLanguageAsync (lang: string) {
     if (i18n.global.locale !== lang) {
         if (!loadedLanguages.includes(lang)) {
             setI18nLanguage(lang)
         }
         return Promise.resolve(setI18nLanguage(lang))
     }
-    return Promise.resolve(lang)
+    return Promise.resolve(setI18nLanguage(lang))
 }
 
