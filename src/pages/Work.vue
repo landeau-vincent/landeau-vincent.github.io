@@ -37,7 +37,7 @@
           <p>{{ $t(`work-item.${$route.params.slug}.content.${index}.text`) }}</p>
         </div>
         <img v-if="item.type == 'image'" class="gallery-thumb cursor-hover" :src="imageSrc(item)" alt="" @click="openGallery(imageSrc(item))">
-        <video v-else-if="item.type == 'local-video'" :src="`/works/${$route.params.slug}${item.src}`" alt="" preload="meta" autoplay loop onclick="this.paused ? this.play() : this.pause();"></video>
+        <video v-else-if="item.type == 'local-video'" class="gallery-thumb cursor-hover" :src="imageSrc(item)" preload="auto" autoplay loop muted playsinline @click="openGallery(imageSrc(item))"></video>
         <iframe v-else-if="item.type == 'video'" :src="`/works/${$route.params.slug}${item.src}`" frameborder="0"></iframe>
       </div>
     </div>
@@ -55,14 +55,15 @@
       <button class="gallery-close cursor-hover" type="button" :aria-label="$t('work-item.gallery-close')" @click="closeGallery">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
       </button>
-      <button v-if="galleryImages.length > 1" class="gallery-nav prev cursor-hover" type="button" :aria-label="$t('work-item.gallery-previous')" @click="stepGallery(-1)">
+      <button v-if="galleryMedia.length > 1" class="gallery-nav prev cursor-hover" type="button" :aria-label="$t('work-item.gallery-previous')" @click="stepGallery(-1)">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5L8 12l6.5 7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
       </button>
-      <img class="gallery-image" :src="galleryImages[galleryIndex]" alt="">
-      <button v-if="galleryImages.length > 1" class="gallery-nav next cursor-hover" type="button" :aria-label="$t('work-item.gallery-next')" @click="stepGallery(1)">
+      <img v-if="currentGalleryItem && currentGalleryItem.type === 'image'" class="gallery-image" :src="currentGalleryItem.src" alt="">
+      <video v-else-if="currentGalleryItem" class="gallery-image" :key="currentGalleryItem.src" :src="currentGalleryItem.src" autoplay loop muted playsinline controls></video>
+      <button v-if="galleryMedia.length > 1" class="gallery-nav next cursor-hover" type="button" :aria-label="$t('work-item.gallery-next')" @click="stepGallery(1)">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5L16 12l-6.5 7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
       </button>
-      <p class="gallery-count">{{ galleryIndex + 1 }} / {{ galleryImages.length }}</p>
+      <p class="gallery-count">{{ galleryIndex + 1 }} / {{ galleryMedia.length }}</p>
     </div>
   </Teleport>
   <OtherWorks :key="componentKey" :slug=$route.params.slug></OtherWorks>
@@ -96,21 +97,32 @@ export default {
     }
   },
   computed: {
-    galleryImages() {
+    galleryMedia() {
       if (!this.work || !this.work.sections) return []
       const slug = this.$route.params.slug
-      const images = []
+      const media = []
       for (const section of Object.values(this.work.sections)) {
         for (const item of section.items || []) {
-          if (item.type === 'image' && item.src) images.push(this.imageSrc(item, slug))
+          if (!item.src) continue
+          if (item.type === 'image') media.push({ type: 'image', src: this.imageSrc(item, slug) })
+          if (item.type === 'local-video') media.push({ type: 'video', src: this.imageSrc(item, slug) })
         }
       }
-      return images
+      return media
+    },
+    currentGalleryItem() {
+      return this.galleryMedia[this.galleryIndex] || null
     }
   },
   watch: {
     '$route.params.slug'() {
       this.closeGallery()
+    },
+    galleryIndex() {
+      this.queueGalleryPlayback()
+    },
+    galleryOpen(open) {
+      if (open) this.queueGalleryPlayback()
     }
   },
   mounted() {
@@ -149,20 +161,38 @@ export default {
       return `/works/${slug || this.$route.params.slug}${item.src}`
     },
     openGallery(src) {
-      const index = this.galleryImages.indexOf(src)
+      const index = this.galleryMedia.findIndex((item) => item.src === src)
       if (index < 0) return
       this.galleryIndex = index
       this.galleryOpen = true
+      this.setPageVideosPlaying(false)
       document.documentElement.style.overflow = 'hidden'
     },
     closeGallery() {
       this.galleryOpen = false
+      this.setPageVideosPlaying(true)
       document.documentElement.style.overflow = ''
     },
     stepGallery(delta) {
-      const total = this.galleryImages.length
+      const total = this.galleryMedia.length
       if (total < 2) return
       this.galleryIndex = (this.galleryIndex + delta + total) % total
+    },
+    setPageVideosPlaying(playing) {
+      document.querySelectorAll('.content-section video').forEach((video) => {
+        if (playing) video.play().catch(() => {})
+        else video.pause()
+      })
+    },
+    queueGalleryPlayback() {
+      this.$nextTick(() => {
+        const video = document.querySelector('.gallery video')
+        if (!video) return
+        video.muted = true
+        const play = () => video.play().catch(() => {})
+        if (video.readyState >= 2) play()
+        else video.addEventListener('canplay', play, { once: true })
+      })
     },
     onGalleryKey(event) {
       if (!this.galleryOpen) return

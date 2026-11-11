@@ -43,8 +43,8 @@ export const en = {
     "visit-website-stroke": "Visit",
     "visit-website-highlighted": "Website",
     "gallery-close": "Close",
-    "gallery-previous": "Previous image",
-    "gallery-next": "Next image",
+    "gallery-previous": "Previous",
+    "gallery-next": "Next",
     "rock-en-delire": {
       "description": "Rock en délire is a fictional project realized during my first year of DUT MMI. The client was a rock festival located in Nantes. Our team was composed of a Writer, a Community Manager and a developer.{br}{br}The event wanted to have more visibility as well as to reinforce the loyalty of the people who came to the previous edition.",
       "challenges": "Create a showcase site without refreshment and with a local database in JSON while learning ReactJS, a Javascript library to facilitate the creation of web applications.",
