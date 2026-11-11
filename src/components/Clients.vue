@@ -5,7 +5,7 @@
         <h2 id="clientsTitleStroke" class="text-stroke">{{ $t('home.clients.subtitle') }}</h2>
       </div>
       <div id="clientItems" class="content">
-        <Carousel :items-to-show="3" :wrap-around="true" class="desktop">
+        <Carousel :items-to-show="4" snap-align="center" :wrap-around="true" class="desktop">
           <Slide v-for="(client,slug) in clients" :key="slug">
             <ClientItem
                 :slug=slug
@@ -32,6 +32,7 @@ import ClientItem from '../components/ClientItem.vue'
 import { Carousel, Slide } from 'vue3-carousel'
 import {gsap} from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
+import { computed } from 'vue'
 import { clients } from '@/content/portfolio'
 import 'vue3-carousel/dist/carousel.css'
 
@@ -44,7 +45,14 @@ export default {
     Slide
   },
   setup () {
-    return { clients }
+    return {
+      clients: computed(() => {
+        const entries = Object.entries(clients).reverse()
+        const [third] = entries.splice(2, 1)
+        if (third) entries.push(third)
+        return Object.fromEntries(entries)
+      }),
+    }
   },
   mounted() {
     gsap.registerPlugin(ScrollTrigger);
@@ -69,6 +77,14 @@ section.container {
 }
 .carousel {
   margin-top: 10vh;
+}
+
+/* Center snap on 4 slides shows half + 3 full + half. */
+@media (min-width: 769px) {
+  .desktop {
+    width: calc(100% * 4 / 3);
+    margin-left: calc(100% / -6);
+  }
 }
 
 @media (min-width: 576px) {
