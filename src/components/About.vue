@@ -61,8 +61,8 @@ export default {
   right: 0;
   z-index: -999;
   max-width: 550px;
-  max-height: 550px;
-  aspect-ratio: 3/4;
+  height: auto;
+  aspect-ratio: 3 / 4;
   background: url('/profile.png');
   background-size: cover;
 }
@@ -80,14 +80,14 @@ export default {
 @media (max-width: 768px) {
   .content .image {
     width: 50vw;
-    height: 50vw;
+    height: auto;
     right: -17.5vw;
   }
 }
 @media (max-width: 576px) {
   .content .image {
     width: 50vw;
-    height: 50vw;
+    height: auto;
     right: -17.5vw;
   }
   .content p {
