@@ -7,6 +7,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), vueJsx()],
+  assetsInclude: ['**/*.wasm'],
   base: 'https://vincent-landeau.github.io/',
   resolve: {
     alias: {

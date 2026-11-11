@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio CRM</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Portfolio CRM</h1>
+    <p class="hint">Edits <code>public/portfolio.sqlite</code> — refresh the Vite site to see changes.</p>
+  </header>
+  <nav class="tabs" id="tabs">
+    <button type="button" data-tab="works" class="active">Works</button>
+    <button type="button" data-tab="clients">Clients</button>
+    <button type="button" data-tab="strings">Site copy</button>
+    <button type="button" data-tab="languages">Languages</button>
+  </nav>
+  <main>
+    <section id="panel-works" class="panel active">
+      <div class="split">
+        <div class="list-pane">
+          <button type="button" id="btn-new-work" class="primary">New work</button>
+          <ul id="works-list"></ul>
+        </div>
+        <div id="work-form" class="editor hidden"></div>
+      </div>
+    </section>
+    <section id="panel-clients" class="panel">
+      <div class="split">
+        <div class="list-pane">
+          <button type="button" id="btn-new-client" class="primary">New client</button>
+          <ul id="clients-list"></ul>
+        </div>
+        <div id="client-form" class="editor hidden"></div>
+      </div>
+    </section>
+    <section id="panel-strings" class="panel">
+      <div class="row">
+        <label>Language <select id="strings-lang"></select></label>
+        <label>Prefix <input id="strings-prefix" value="home." /></label>
+        <button type="button" id="strings-load">Load</button>
+        <button type="button" id="strings-save" class="primary">Save</button>
+      </div>
+      <div id="strings-editor"></div>
+    </section>
+    <section id="panel-languages" class="panel">
+      <ul id="languages-list"></ul>
+      <form id="language-form" class="row">
+        <input name="code" placeholder="ko" required pattern="[a-z]{2,10}" />
+        <input name="name" placeholder="Korean" />
+        <button type="submit" class="primary">Add language</button>
+      </form>
+    </section>
+  </main>
+  <div id="toast" hidden></div>
+  <script src="app.js" type="module"></script>
+</body>
+</html>

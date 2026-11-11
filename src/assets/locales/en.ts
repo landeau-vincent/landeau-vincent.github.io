@@ -80,6 +80,40 @@ export const en = {
           "text": "The experience begins by scanning the QR code, which then invites you to read the story of the France, the emblematic boat of old Annecy that mysteriously sank overnight. On the right, you can see a very intriguing dashboard. Once the throttle is activated, a hatch opens, releasing the heart of the France, which flies off towards the lake. A circle appears, inviting me to touch it at a specific moment to help the heart beat again. With each successful touch, we see a structure forming around the heart. Could this be the new shape of the France? Once the structure has fully returned, it disappears to make way for the France of yesteryear, which we can then contemplate. A screen appears congratulating us on having successfully completed the experiment and inviting us to visit a website retracing the history of the France."
         }
       }
+    },
+    "bikefleet": {
+      "description": "Bikefleet is a mobile application for motorcycle owners, published by Systemity, a Swedish software company. It is a digital garage: every bike, its service history, documents and photos live in one place, on iOS and Android.{br}{br}I joined as a freelance full-stack engineer from December 2025 to June 2026 and built the API the mobile application relies on.",
+      "challenges": "Ship an API that could follow the mobile app as it released new versions, while keeping the maintenance history, documents and files consistent for every vehicle.",
+      "solutions": "A TypeScript API built with Hono and Prisma, backed by PostgreSQL, Firebase authentication and file storage. It covers the garage catalogue, recurring maintenance, documents and photos, and sends each app version to the right feature logic.",
+      "content": {
+        "garage": {
+          "title": "The garage",
+          "text": "A rider adds a motorcycle and switches between every bike they own. Each vehicle keeps its make, mileage and identity, so maintenance, documents and notes all attach to the same record."
+        },
+        "maintenance": {
+          "title": "The logbook",
+          "text": "Oil changes, chain lubrication and inspections are stored as tasks, including the next one created by a recurrence. Completing several tasks at once no longer duplicates that next maintenance, and deleting a task removes the files attached to it."
+        },
+        "documents": {
+          "title": "Documents",
+          "text": "Insurance, invoices and registration stay on the vehicle. They are stored with the same account used to sign in on the phone, so the rider can open them again from the app."
+        }
+      }
+    },
+    "systemity": {
+      "description": "Systemity is the operating system for competitive race teams. Built by Systemity AB in Ystad, Sweden, it brings vehicles, parts, work orders, maintenance and a race weekend into one workspace.{br}{br}From June to November 2026 I developed the API and the authentication used by the web application: asset lifecycles, work orders, a calendar, racing sessions, file storage and locations.",
+      "challenges": "Give a team one reliable record of its equipment and of the work happening on it, from the workshop to the paddock, including when an asset is archived or reassigned.",
+      "solutions": "A TypeScript API on Hono and Prisma, with PostgreSQL, Better Auth and file storage. Teams group their assets, plan maintenance, open work orders linked to those tasks, and run events, sessions and a calendar from the same system.",
+      "content": {
+        "assets": {
+          "title": "Assets",
+          "text": "Each car keeps its status, build and usage: odometer, brake wear, and the work orders attached to it. Archived cars stay in the list, so the history does not disappear when a car leaves the active fleet."
+        },
+        "calendar": {
+          "title": "The calendar",
+          "text": "The weekend sits on one calendar. Track loads, practice, a grand prix and the post-race inspection share the same record as the cars that run them."
+        }
+      }
     }
   },
   "not-found": {

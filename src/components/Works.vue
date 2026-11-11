@@ -19,7 +19,7 @@
 import WorkItem from '../components/WorkItem.vue'
 import {gsap} from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
-import {works} from "@/assets/data";
+import { works } from '@/content/portfolio'
 
 
 export default {

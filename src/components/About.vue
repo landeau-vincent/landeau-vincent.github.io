@@ -62,12 +62,8 @@ export default {
   z-index: -999;
   max-width: 550px;
   max-height: 550px;
-  width: 35vw;
-  height: 35vw;
-  background:
-      linear-gradient(0deg, rgba(30, 30, 30, 0.3), rgba(30, 30, 30, 0.3)),
-      linear-gradient(0deg, rgba(150, 120, 182, 0.3), rgba(150, 120, 182, 0.3)),
-      url('/profile.jpg');
+  aspect-ratio: 3/4;
+  background: url('/profile.png');
   background-size: cover;
 }
 

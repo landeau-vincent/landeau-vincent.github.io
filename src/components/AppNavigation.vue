@@ -56,15 +56,15 @@ import {gsap} from 'gsap';
 import {TextPlugin} from "gsap/TextPlugin";
 import {ScrollToPlugin} from "gsap/ScrollToPlugin";
 import {routerPush} from "@/router";
-import {works} from "@/assets/data";
-import {languagesAvailable, loadLanguageAsync} from "@/i18n";
+import { works } from '@/content/portfolio'
+import { getLanguagesAvailable, loadLanguageAsync } from '@/i18n'
 
 
 export default {
   data() {
     return {
       currentLang: null,
-      listLang: languagesAvailable,
+      listLang: getLanguagesAvailable(),
       showDropdown: false,
       navTl: [],
       bulletPointActive: 'intro',

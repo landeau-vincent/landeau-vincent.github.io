@@ -58,7 +58,7 @@ import Cta from '../components/Cta.vue'
 import OtherWorks from '../components/OtherWorks.vue'
 import {gsap} from "gsap";
 import {useRoute} from 'vue-router'
-import {works} from "@/assets/data";
+import { works } from '@/content/portfolio'
 import {loadMouseHover} from "@/cursor";
 
 export default {
@@ -234,6 +234,9 @@ h1.text-stroke:after {
 .content-section.row-reverse { flex-direction: row-reverse;}
 .content-section.column { flex-direction: column;}
 .content-section.column-reverse { flex-direction: column-reverse;}
+.content-section:not(.row):not(.row-reverse) { align-items: start;}
+.content-section:not(.column):not(.column-reverse) { align-items: center;}
+.content-section:not(.row):not(.row-reverse) .content p { padding-bottom: 3rem;}
 
 .content-section .content {
   max-width: 100%;
@@ -247,6 +250,12 @@ h1.text-stroke:after {
   font-family: "Lust Slim Display";
   font-size: 48px;
   line-height: 48px;
+}
+
+.content p {
+  font-size: 18px;
+  line-height: 18px;
+  max-width: 540px;
 }
 
 .content video,
@@ -321,12 +330,11 @@ h1.text-stroke:after {
 
   .content-section {
     flex-wrap: wrap;
-    justify-content: center;
   }
   .content {
     max-width: 100%!important;
     width: 100%;
-    padding-bottom: 50px;
+    margin-bottom: 50px;
   }
 }
 

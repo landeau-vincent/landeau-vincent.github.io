@@ -15,7 +15,7 @@
 <script>
 import WorkItem from '../components/WorkItem.vue'
 import {routerPush} from "@/router";
-import {works} from "@/assets/data";
+import { works } from '@/content/portfolio'
 import {loadMouseHover} from "@/cursor";
 
 export default {

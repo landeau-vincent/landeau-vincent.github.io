@@ -134,6 +134,61 @@ export const works = {
             },
         }
     },
+    "bikefleet": {
+        "nav-label": "Bikefleet",
+        "title": "Bike",
+        "subtitle": "Fleet",
+        "date": "2026",
+        "roles": ["backend", "frontend"],
+        "url": "https://www.getbikefleet.com/",
+        "sections": {
+            "garage": {
+                "direction": "row",
+                "items": [
+                    { "type": "text" },
+                    { "type": "image", "src": "/garage.png" }
+                ]
+            },
+            "maintenance": {
+                "direction": "row-reverse",
+                "items": [
+                    { "type": "text" },
+                    { "type": "image", "src": "/maintenance.png" }
+                ]
+            },
+            "documents": {
+                "direction": "row",
+                "items": [
+                    { "type": "text" },
+                    { "type": "image", "src": "/documents.png" }
+                ]
+            }
+        }
+    },
+    "systemity": {
+        "nav-label": "Systemity",
+        "title": "Systemity",
+        "subtitle": "Race teams",
+        "date": "2026",
+        "roles": ["backend", "frontend"],
+        "url": "https://www.systemity.com/",
+        "sections": {
+            "assets": {
+                "direction": "row",
+                "items": [
+                    { "type": "text" },
+                    { "type": "image", "src": "/assets.jpg" }
+                ]
+            },
+            "calendar": {
+                "direction": "row-reverse",
+                "items": [
+                    { "type": "text" },
+                    { "type": "image", "src": "/calendar.jpg" }
+                ]
+            }
+        }
+    },
 };
 
 export const clients = {

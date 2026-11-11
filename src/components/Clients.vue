@@ -32,7 +32,7 @@ import ClientItem from '../components/ClientItem.vue'
 import { Carousel, Slide } from 'vue3-carousel'
 import {gsap} from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
-import {clients} from "@/assets/data";
+import { clients } from '@/content/portfolio'
 import 'vue3-carousel/dist/carousel.css'
 
 

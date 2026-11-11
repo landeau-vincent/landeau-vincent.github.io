@@ -80,6 +80,40 @@ export const fr = {
           "text": "L'expérience débute par le scanne du QR code qui nous invite ensuite à lire la petite histoire du France, bateau emblématique de la vieille Annecy ayant coulé mystérieusement durant la nuit. On aperçoit sur la droite, un tableau de bord très intrigant. La manette activée, une trappe s'ouvre et libère le cœur du France qui s'envole vers le lac. Un cercle apparaît, m'invitant à le toucher à un moment précis pour aider le cœur à battre de nouveau. À chaque touche réussie, nous apercevons une structure se former autour du cœur. Serait-ce la nouvelle forme du France ? Une fois la structure entièrement revenue, elle disparaît pour faire place au France d'antan que nous pouvons alors contempler. Un écran apparaît nous félicitant d'avoir réussi l'expérience et nous invite à aller sur un site web retraçant l'histoire du France."
         },
       }
+    },
+    "bikefleet": {
+      "description": "Bikefleet est une application mobile pour les motards, éditée par Systemity, une société suédoise. C'est un garage numérique : chaque moto, son historique d'entretien, ses documents et ses photos tiennent dans une seule application, sur iOS et Android.{br}{br}Je l'ai rejoint en freelance, de décembre 2025 à juin 2026, pour concevoir l'API sur laquelle s'appuie l'application.",
+      "challenges": "Faire évoluer l'API au rythme des versions de l'application, sans casser l'historique d'entretien, les documents et les fichiers de chaque véhicule.",
+      "solutions": "Une API TypeScript avec Hono et Prisma, PostgreSQL, l'authentification et le stockage de fichiers Firebase. Elle couvre le catalogue du garage, les entretiens récurrents, les documents et les photos, et oriente chaque version de l'application vers la bonne logique.",
+      "content": {
+        "garage": {
+          "title": "Le garage",
+          "text": "Le motard ajoute une moto et passe de l'une à l'autre. Chaque véhicule garde sa marque, son kilométrage et son identité, pour que l'entretien, les documents et les notes s'attachent au même dossier."
+        },
+        "maintenance": {
+          "title": "Le carnet",
+          "text": "Vidanges, graissages de chaîne et contrôles sont enregistrés comme des tâches, y compris la prochaine, créée par une récurrence. Valider plusieurs tâches d'un coup ne duplique plus cet entretien suivant, et supprimer une tâche retire aussi les fichiers qui y sont liés."
+        },
+        "documents": {
+          "title": "Les documents",
+          "text": "Assurance, factures et carte grise restent sur le véhicule. Ils sont stockés avec le même compte que celui utilisé sur le téléphone, pour les rouvrir depuis l'application."
+        }
+      }
+    },
+    "systemity": {
+      "description": "Systemity est le système d'exploitation des équipes de course. Conçu par Systemity AB à Ystad, en Suède, il réunit véhicules, pièces, ordres de travail, maintenance et week-end de course dans un seul espace.{br}{br}De juin à novembre 2026, j'ai développé l'API et l'authentification utilisées par l'application web : le cycle de vie des actifs, les ordres de travail, le calendrier, les sessions, le stockage de fichiers et les lieux.",
+      "challenges": "Offrir à une équipe un historique fiable de son matériel et du travail qui s'y rapporte, de l'atelier au paddock, y compris lorsqu'un actif est archivé ou réaffecté.",
+      "solutions": "Une API TypeScript sur Hono et Prisma, avec PostgreSQL, Better Auth et le stockage de fichiers. Les équipes regroupent leurs actifs, planifient la maintenance, ouvrent des ordres de travail liés à ces tâches, et pilotent événements, sessions et calendrier dans le même système.",
+      "content": {
+        "assets": {
+          "title": "Les actifs",
+          "text": "Chaque voiture garde son statut, sa configuration et son usage : kilométrage, usure des freins, et les ordres de travail qui lui sont liés. Les voitures archivées restent dans la liste, pour que l'historique ne disparaisse pas quand une voiture quitte le parc actif."
+        },
+        "calendar": {
+          "title": "Le calendrier",
+          "text": "Le week-end tient sur un seul calendrier. Chargements, essais, grand prix et inspection d'après-course partagent le même dossier que les voitures qui roulent."
+        }
+      }
     }
   },
   "not-found": {
