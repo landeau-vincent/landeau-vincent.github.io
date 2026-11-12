@@ -16,8 +16,12 @@ import Clients from '../components/Clients.vue'
 
 <script lang="ts">
 import {loadMouseHover} from "../cursor";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
 
 export default {
+  beforeUnmount() {
+    ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+  },
   mounted() {
     let isMobile = false;
     (function (a) {

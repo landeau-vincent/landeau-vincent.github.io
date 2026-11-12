@@ -27,7 +27,7 @@ export default {
   name: "Intro",
   mounted() {
     gsap.registerPlugin(ScrollTrigger);
-    gsap.timeline({
+    this._introTl = gsap.timeline({
       scrollTrigger: {
         trigger: "#section-intro",
         scrub: 1,
@@ -36,6 +36,10 @@ export default {
       }
     }).to('#introTitle', 2, {left: -100, autoAlpha: 0}, 0)
       .to('#introTitleStroke', 2, {right: -100, autoAlpha: 0}, 0)
+  },
+  beforeUnmount() {
+    this._introTl?.scrollTrigger?.kill()
+    this._introTl?.kill()
   }
 }
 </script>
