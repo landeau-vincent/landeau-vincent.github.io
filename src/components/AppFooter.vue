@@ -2,7 +2,7 @@
   <footer>
     <span>Copyright ©{{ new Date().getFullYear() }} {{ $t('copyright') }} Vincent LANDEAU</span>
     <div>
-      <a href="https://github.com/vincent-landeau" target="_blank">
+      <a href="https://github.com/landeau-vincent" target="_blank">
         <svg width="48" height="48" viewBox="-3 -3 26 26" xmlns="http://www.w3.org/2000/svg"
              preserveAspectRatio="xMinYMin" style="fill: #f2f2f2">
           <path

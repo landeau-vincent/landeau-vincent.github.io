@@ -8,7 +8,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 export default defineConfig({
   plugins: [vue(), vueJsx()],
   assetsInclude: ['**/*.wasm'],
-  base: 'https://vincent-landeau.github.io/',
+  base: 'https://landeau-vincent.github.io/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

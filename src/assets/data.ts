@@ -5,7 +5,7 @@ export const works = {
         "subtitle": "délire",
         "date": "2021",
         "roles": ["graphist", "ux-ui", "frontend"],
-        "url": "https://vincent-landeau.github.io/rock-en-delire/",
+        "url": "https://landeau-vincent.github.io/rock-en-delire/",
         "sections": {
             "logo":  {
                 "direction": 'row',
